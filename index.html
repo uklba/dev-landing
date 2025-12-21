@@ -65,6 +65,17 @@
         text-decoration: underline;
       }
 
+      .project-link-wrapper {
+        text-decoration: none;
+        color: inherit;
+        display: contents;
+      }
+
+      .project-link-wrapper:hover .project-link {
+        text-decoration: underline;
+        color: var(--accent);
+      }
+
       section {
         margin-top: 40px;
       }
@@ -88,10 +99,56 @@
         padding: 18px 20px;
         border: 1px solid rgba(148, 163, 184, 0.15);
         display: flex;
-        justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 20px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      li:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      }
+
+      .project-image {
+        width: 200px;
+        height: 120px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        flex-shrink: 0;
+        background: rgba(148, 163, 184, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .project-image.empty {
+        background: rgba(148, 163, 184, 0.05);
+      }
+
+      .project-content {
+        flex: 1;
+        min-width: 200px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .project-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
       }
 
       .project-name {
@@ -101,6 +158,19 @@
       .project-desc {
         color: var(--muted);
         font-size: 0.95rem;
+      }
+
+      .project-link {
+        margin-top: 8px;
+        color: var(--accent);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 640px) {
+        .project-image {
+          width: 100%;
+          height: 160px;
+        }
       }
 
       footer {
@@ -121,32 +191,60 @@
         <h2>Moje projekty</h2>
         <ul>
           <li>
-            <div>
-              <div class="project-name">Siatki centylowe</div>
-              <div class="project-desc">Siatki centylowe dla dzieci w wieku 0-60 miesięcy</div>
-            </div>
-            <a href="https://lukaszdev.pl/siatki-centylowe">lukaszdev.pl/siatki-centylowe</a>
+            <a href="https://lukaszdev.pl/siatki-centylowe" class="project-link-wrapper">
+              <div class="project-image">
+                <img src="images/siatki-centylowe-preview.png" alt="Siatki centylowe">
+              </div>
+              <div class="project-content">
+                <div class="project-info">
+                  <div class="project-name">Siatki centylowe</div>
+                  <div class="project-desc">Siatki centylowe dla dzieci w wieku 0-60 miesięcy</div>
+                </div>
+                <div class="project-link">lukaszdev.pl/siatki-centylowe</div>
+              </div>
+            </a>
           </li>
           <li>
-            <div>
-              <div class="project-name">Projekt 2</div>
-              <div class="project-desc">Opis</div>
-            </div>
-            <a href="https://lukaszdev.pl/">lukaszdev.pl/</a>
+            <a href="https://lukaszdev.pl/" class="project-link-wrapper">
+              <div class="project-image empty">
+                <span>Obraz projektu</span>
+              </div>
+              <div class="project-content">
+                <div class="project-info">
+                  <div class="project-name">Projekt 2</div>
+                  <div class="project-desc">Opis</div>
+                </div>
+                <div class="project-link">lukaszdev.pl/</div>
+              </div>
+            </a>
           </li>
           <li>
-            <div>
-              <div class="project-name">Projekt 3</div>
-              <div class="project-desc">Opis</div>
-            </div>
-            <a href="https://lukaszdev.pl/">lukaszdev.pl/</a>
+            <a href="https://lukaszdev.pl/" class="project-link-wrapper">
+              <div class="project-image empty">
+                <span>Obraz projektu</span>
+              </div>
+              <div class="project-content">
+                <div class="project-info">
+                  <div class="project-name">Projekt 3</div>
+                  <div class="project-desc">Opis</div>
+                </div>
+                <div class="project-link">lukaszdev.pl/</div>
+              </div>
+            </a>
           </li>
           <li>
-            <div>
-              <div class="project-name">Pfojekt4</div>
-              <div class="project-desc">Opis</div>
-            </div>
-            <a href="https://lukaszdev.pl/">lukaszdev.pl</a/>
+            <a href="https://lukaszdev.pl/" class="project-link-wrapper">
+              <div class="project-image empty">
+                <span>Obraz projektu</span>
+              </div>
+              <div class="project-content">
+                <div class="project-info">
+                  <div class="project-name">Pfojekt4</div>
+                  <div class="project-desc">Opis</div>
+                </div>
+                <div class="project-link">lukaszdev.pl</div>
+              </div>
+            </a>
           </li>
         </ul>
       </section>
