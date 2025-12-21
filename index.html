@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Łukasz — student informatyki</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #0f172a;
+        --bg-accent: #111c33;
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+        --card: #1e293b;
+        --accent: #38bdf8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+        background: radial-gradient(circle at top, #172554 0%, var(--bg) 45%, #020617 100%);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 64px 24px 80px;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 32px;
+        border-radius: 24px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(148, 163, 184, 0.08));
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.4);
+      }
+
+      h1 {
+        font-size: clamp(2.5rem, 4vw, 3.6rem);
+        margin: 0;
+      }
+
+      header p {
+        margin: 0;
+        font-size: 1.1rem;
+        color: var(--muted);
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      section {
+        margin-top: 40px;
+      }
+
+      section h2 {
+        font-size: 1.7rem;
+        margin-bottom: 16px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 16px;
+      }
+
+      li {
+        background: var(--card);
+        border-radius: 18px;
+        padding: 18px 20px;
+        border: 1px solid rgba(148, 163, 184, 0.15);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .project-name {
+        font-weight: 600;
+      }
+
+      .project-desc {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      footer {
+        margin-top: 48px;
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Łukasz</h1>
+        <p>Student informatyki · Kontakt: <a href="mailto:kontakt@lukaszdev.pl">kontakt@lukaszdev.pl</a></p>
+      </header>
+
+      <section>
+        <h2>Moje projekty</h2>
+        <ul>
+          <li>
+            <div>
+              <div class="project-name">Portfolio i CV</div>
+              <div class="project-desc">Przegląd doświadczeń, technologii i osiągnięć.</div>
+            </div>
+            <a href="https://lukaszdev.pl/portfolio">lukaszdev.pl/portfolio</a>
+          </li>
+          <li>
+            <div>
+              <div class="project-name">Blog o inżynierii oprogramowania</div>
+              <div class="project-desc">Notatki z nauki, recenzje narzędzi, tutoriale.</div>
+            </div>
+            <a href="https://lukaszdev.pl/blog">lukaszdev.pl/blog</a>
+          </li>
+          <li>
+            <div>
+              <div class="project-name">Lab projektów uczelnianych</div>
+              <div class="project-desc">Repozytorium zadań i eksperymentów na studiach.</div>
+            </div>
+            <a href="https://lukaszdev.pl/lab">lukaszdev.pl/lab</a>
+          </li>
+          <li>
+            <div>
+              <div class="project-name">Aplikacje webowe</div>
+              <div class="project-desc">Przegląd mini-aplikacji tworzonych w ramach nauki.</div>
+            </div>
+            <a href="https://lukaszdev.pl/apps">lukaszdev.pl/apps</a>
+          </li>
+        </ul>
+      </section>
+
+      <footer>Jeśli chcesz porozmawiać o współpracy lub projekcie, napisz śmiało na maila.</footer>
+    </main>
+  </body>
+</html>
