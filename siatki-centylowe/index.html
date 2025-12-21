@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Siatek Centylowych</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Siatki Centylowe</h1>
+            <p>Sprawdź rozwój swojego dziecka wg standardów WHO</p>
+        </header>
+
+        <main class="grid">
+            <section class="card input-section">
+                <h2>Dane Dziecka</h2>
+                <form id="growthForm">
+                    <div class="form-group">
+                        <label>Płeć</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="boys" checked>
+                                <span class="custom-radio"></span> Chłopiec
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="girls">
+                                <span class="custom-radio"></span> Dziewczynka
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div class="age-input-container">
+                        <label>Wiek Dziecka</label>
+                        <div class="tabs">
+                            <div class="tab active" data-tab="dob">Data Urodzenia</div>
+                            <div class="tab" data-tab="manual">Wpisz Ręcznie</div>
+                        </div>
+
+                        <div class="tab-content active" id="dob-content">
+                            <div class="form-group">
+                                <label for="dob">Data urodzenia</label>
+                                <input type="date" id="dob" name="dob">
+                                <span class="hint" id="calculated-age-hint">Wybierz datę aby obliczyć wiek</span>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="manual-content">
+                            <div class="manual-age-grid">
+                                <div class="form-group">
+                                    <label for="years">Lata</label>
+                                    <input type="number" id="years" name="years" min="0" max="5" placeholder="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="months">Miesiące</label>
+                                    <input type="number" id="months" name="months" min="0" max="11" placeholder="0">
+                                </div>
+                            </div>
+                            <span class="hint">0 - 5 lat</span>
+                        </div>
+                        <!-- Hidden input to store calculated total months for logic -->
+                        <input type="hidden" id="age" name="age">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="weight">Waga (kg)</label>
+                        <input type="number" id="weight" name="weight" step="0.1" min="0" placeholder="np. 10.5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="height">Wzrost (cm)</label>
+                        <input type="number" id="height" name="height" step="0.1" min="0" placeholder="np. 76">
+                    </div>
+
+                    <button type="submit" class="btn-primary">Oblicz</button>
+                    <button type="button" class="btn-secondary" id="fillSample">Przykład</button>
+                </form>
+            </section>
+
+            <section class="card result-section" id="results" style="display:none;">
+                <h2>Wyniki</h2>
+                <div class="results-summary">
+                    <div class="result-box">
+                        <h3>Waga</h3>
+                        <p class="percentile-value" id="weightPercentile">--</p>
+                        <span class="label">Centyl</span>
+                    </div>
+                    <div class="result-box">
+                        <h3>Wzrost</h3>
+                        <p class="percentile-value" id="heightPercentile">--</p>
+                        <span class="label">Centyl</span>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+
+    <footer class="main-footer">
+        <p>Aplikacja stworzona przez <strong>Łukasz B.</strong></p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
