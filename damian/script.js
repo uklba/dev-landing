@@ -1,3 +1,27 @@
+// Script loaded check - CRITICAL: This should appear first in console
+// Uncomment the alert below if you don't see any console messages
+// alert('Script.js loaded! Check console for details.');
+
+console.log('🚀🚀🚀 Script.js file loaded and executing 🚀🚀🚀');
+console.log('🚀 Script execution started at:', new Date().toISOString());
+console.log('🚀 Window object exists:', typeof window !== 'undefined');
+console.log('🚀 Document object exists:', typeof document !== 'undefined');
+
+// Test if console works
+if (typeof console !== 'undefined') {
+  console.log('✅ Console is available');
+} else {
+  alert('Console not available - this is a problem!');
+}
+
+// Immediate test - this should work even if DOM is not ready
+try {
+  console.log('✅ Script execution test passed');
+} catch (e) {
+  alert('Script execution failed: ' + e.message);
+  throw e; // Re-throw to stop execution
+}
+
 // Dane aplikacji
 const appState = {
   name: '',
@@ -7,6 +31,7 @@ const appState = {
   dateStart: '',
   dateEnd: ''
 };
+console.log('✅ appState initialized');
 
 // Mapowanie destynacji
 const destinations = {
@@ -31,6 +56,7 @@ const destinations = {
     description: 'Spokojnie i jakościowo'
   }
 };
+console.log('✅ destinations initialized');
 
 // Ripple effect dla przycisków
 function createRipple(event) {
@@ -56,8 +82,43 @@ function createRipple(event) {
   }, 600);
 }
 
+// Global error handler
+window.addEventListener('error', (event) => {
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:60', message: 'Global error caught', data: { message: event.message, filename: event.filename, lineno: event.lineno, colno: event.colno, error: event.error ? event.error.toString() : null }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run3', hypothesisId: 'E' }) }).catch(() => { });
+  // #endregion
+  console.error('🔴 Global error:', {
+    message: event.message,
+    filename: event.filename,
+    lineno: event.lineno,
+    colno: event.colno,
+    error: event.error
+  });
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:60', message: 'Unhandled promise rejection', data: { reason: event.reason ? event.reason.toString() : null }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run3', hypothesisId: 'E' }) }).catch(() => { });
+  // #endregion
+  console.error('Unhandled promise rejection:', event.reason);
+});
+
 // Inicjalizacja
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  // DOM is already loaded
+  init();
+}
+
+function init() {
+  console.log('✅ DOMContentLoaded fired');
+  console.log('🟡 Document ready state:', document.readyState);
+  console.log('🟡 Document body exists:', !!document.body);
+  console.log('🟡 Number of screens found:', document.querySelectorAll('.screen').length);
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:60', message: 'DOMContentLoaded fired', data: { timestamp: Date.now() }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run3', hypothesisId: 'E' }) }).catch(() => { });
+  // #endregion
   // Dodaj style dla ripple
   const style = document.createElement('style');
   style.textContent = `
@@ -83,15 +144,51 @@ document.addEventListener('DOMContentLoaded', () => {
   document.head.appendChild(style);
 
   // Init Snow
-  initSnow();
+  try {
+    initSnow();
+  } catch (error) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:89', message: 'initSnow error', data: { error: error.message, stack: error.stack }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run3', hypothesisId: 'D' }) }).catch(() => { });
+    // #endregion
+    console.error('Error initializing snow:', error);
+  }
 
-  initApp();
-});
+  try {
+    console.log('🟡 Starting initApp...');
+    initApp();
+    console.log('✅ initApp completed successfully');
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:88', message: 'initApp completed successfully', data: { timestamp: Date.now() }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { });
+    // #endregion
+  } catch (error) {
+    console.error('🔴 Error initializing app:', error);
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:88', message: 'initApp error', data: { error: error.message, stack: error.stack }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { });
+    // #endregion
+  }
+}
 
 // Snow Effect
 function initSnow() {
   const canvas = document.getElementById('snow-canvas');
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:105', message: 'initSnow started', data: { canvasExists: !!canvas }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run3', hypothesisId: 'D' }) }).catch(() => { });
+  // #endregion
+  if (!canvas) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:105', message: 'snow-canvas not found', data: { error: 'Missing canvas element' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run3', hypothesisId: 'D' }) }).catch(() => { });
+    // #endregion
+    console.error('Snow canvas not found');
+    return;
+  }
   const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:105', message: 'Cannot get 2d context', data: { error: 'Context error' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run3', hypothesisId: 'D' }) }).catch(() => { });
+    // #endregion
+    console.error('Cannot get 2d context');
+    return;
+  }
 
   let width = window.innerWidth;
   let height = window.innerHeight;
@@ -184,10 +281,36 @@ function triggerConfetti() {
 }
 
 function initApp() {
+  console.log('🟡 initApp started');
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:186', message: 'initApp started', data: { timestamp: Date.now() }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { });
+  // #endregion
   // Formularz imienia
   const nameForm = document.getElementById('name-form');
   const nameInput = document.getElementById('name-input');
   const nameError = document.getElementById('name-error');
+  console.log('🟡 Checking name form elements:', {
+    nameForm: !!nameForm,
+    nameInput: !!nameInput,
+    nameError: !!nameError
+  });
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:204', message: 'Checking name form elements', data: { nameFormExists: !!nameForm, nameInputExists: !!nameInput, nameErrorExists: !!nameError }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+  // #endregion
+
+  if (!nameForm || !nameInput || !nameError) {
+    console.error('🔴 Missing name form elements:', {
+      nameForm: !!nameForm,
+      nameInput: !!nameInput,
+      nameError: !!nameError
+    });
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:208', message: 'Missing name form elements', data: { error: 'Critical elements missing' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+    // #endregion
+    return;
+  }
+
+  console.log('✅ Name form elements found, adding event listener');
 
   nameForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -231,40 +354,82 @@ function initApp() {
 
   // Przycisk wyboru kierunku -> Start Presentation Mode
   const btnChooseDestination = document.getElementById('btn-choose-destination');
-  btnChooseDestination.addEventListener('click', (e) => {
-    createRipple(e);
-    initPresentation();
-    setTimeout(() => {
-      showScreen('screen-presentation');
-    }, 200);
-  });
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:249', message: 'Checking btn-choose-destination', data: { btnExists: !!btnChooseDestination }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+  // #endregion
+  if (btnChooseDestination) {
+    btnChooseDestination.addEventListener('click', (e) => {
+      createRipple(e);
+      initPresentation();
+      setTimeout(() => {
+        showScreen('screen-presentation');
+      }, 200);
+    });
+  } else {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:249', message: 'btn-choose-destination not found', data: { error: 'Missing element' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+    // #endregion
+  }
 
   // Presentation Logic
   const btnPresentationNext = document.getElementById('btn-presentation-next');
-  btnPresentationNext.addEventListener('click', (e) => {
-    createRipple(e);
-    nextPresentationSlide();
-  });
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:259', message: 'Checking btn-presentation-next', data: { btnExists: !!btnPresentationNext }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+  // #endregion
+  if (btnPresentationNext) {
+    btnPresentationNext.addEventListener('click', (e) => {
+      createRipple(e);
+      nextPresentationSlide();
+    });
+  } else {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:259', message: 'btn-presentation-next not found', data: { error: 'Missing element' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+    // #endregion
+  }
+
+  const btnPresentationPrev = document.getElementById('btn-presentation-prev');
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:265', message: 'Checking btn-presentation-prev', data: { btnExists: !!btnPresentationPrev }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+  // #endregion
+  if (btnPresentationPrev) {
+    btnPresentationPrev.addEventListener('click', (e) => {
+      createRipple(e);
+      prevPresentationSlide();
+    });
+  } else {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:265', message: 'btn-presentation-prev not found', data: { error: 'Missing element' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+    // #endregion
+  }
 
   // Formularz destynacji
   const destinationForm = document.getElementById('destination-form');
   const destinationError = document.getElementById('destination-error');
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:272', message: 'Checking destination form elements', data: { formExists: !!destinationForm, errorExists: !!destinationError }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+  // #endregion
 
-  destinationForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const selected = document.querySelector('input[name="destination"]:checked');
+  if (destinationForm && destinationError) {
+    destinationForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const selected = document.querySelector('input[name="destination"]:checked');
 
-    if (!selected) {
-      showError(destinationError, 'Proszę wybrać destynację');
-      return;
-    }
+      if (!selected) {
+        showError(destinationError, 'Proszę wybrać destynację');
+        return;
+      }
 
-    hideError(destinationError);
-    appState.destination = selected.value;
-    appState.destinationName = destinations[selected.value].name;
-    showScreen('screen-dates');
-    initDatesScreen();
-  });
+      hideError(destinationError);
+      appState.destination = selected.value;
+      appState.destinationName = destinations[selected.value].name;
+      showScreen('screen-dates');
+      initDatesScreen();
+    });
+  } else {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:272', message: 'destination form elements not found', data: { error: 'Missing elements' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+    // #endregion
+  }
 
   // Przyciski długości pobytu
   document.querySelectorAll('.duration-btn').forEach(btn => {
@@ -283,7 +448,10 @@ function initApp() {
       createRipple(e);
       const month = parseInt(btn.dataset.month);
       const dates = getQuickDates(month, appState.duration);
-      document.getElementById('date-start').value = dates.start;
+      const dateStartInput = document.getElementById('date-start');
+      if (dateStartInput) {
+        dateStartInput.value = dates.start;
+      }
       appState.dateStart = dates.start;
       updateDateEnd();
 
@@ -297,69 +465,93 @@ function initApp() {
 
   // Input daty startowej
   const dateStartInput = document.getElementById('date-start');
-  dateStartInput.addEventListener('change', () => {
-    appState.dateStart = dateStartInput.value;
-    updateDateEnd();
-  });
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:321', message: 'Checking date-start input', data: { inputExists: !!dateStartInput }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+  // #endregion
+  if (dateStartInput) {
+    dateStartInput.addEventListener('change', () => {
+      appState.dateStart = dateStartInput.value;
+      updateDateEnd();
+    });
 
-  // Ustaw minimalną datę na dzisiaj
-  const today = new Date().toISOString().split('T')[0];
-  dateStartInput.setAttribute('min', today);
+    // Ustaw minimalną datę na dzisiaj
+    // Ustaw minimalną datę na 2026-01-01
+    const minDate = '2026-01-01';
+    dateStartInput.setAttribute('min', minDate);
+  } else {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:321', message: 'date-start input not found', data: { error: 'Missing element' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+    // #endregion
+  }
 
   // Formularz dat
   const datesForm = document.getElementById('dates-form');
   const datesError = document.getElementById('dates-error');
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:332', message: 'Checking dates form elements', data: { formExists: !!datesForm, errorExists: !!datesError }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+  // #endregion
 
-  datesForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+  if (datesForm && datesError) {
+    datesForm.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-    if (!appState.dateStart || !appState.dateEnd) {
-      showError(datesError, 'Proszę wybrać daty');
-      return;
-    }
+      if (!appState.dateStart || !appState.dateEnd) {
+        showError(datesError, 'Proszę wybrać daty');
+        return;
+      }
 
-    // Walidacja dat
-    const start = new Date(appState.dateStart);
-    const end = new Date(appState.dateEnd);
-    const diffDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+      // Walidacja dat
+      const start = new Date(appState.dateStart);
+      const end = new Date(appState.dateEnd);
+      const diffDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
 
-    if (diffDays !== appState.duration) {
-      showError(datesError, `Termin musi trwać dokładnie ${appState.duration} dni`);
-      return;
-    }
+      if (diffDays !== appState.duration) {
+        showError(datesError, `Termin musi trwać dokładnie ${appState.duration} dni`);
+        return;
+      }
 
-    if (start < new Date(today)) {
-      showError(datesError, 'Data rozpoczęcia nie może być w przeszłości');
-      return;
-    }
+      if (start < new Date(today)) {
+        showError(datesError, 'Data rozpoczęcia nie może być w przeszłości');
+        return;
+      }
 
-    hideError(datesError);
-    showScreen('screen-summary');
-    updateSummary();
-  });
+      hideError(datesError);
+      showScreen('screen-summary');
+      updateSummary();
+    });
+  } else {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:332', message: 'dates form elements not found', data: { error: 'Missing elements' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
+    // #endregion
+  }
 
   // Przyciski podsumowania
-  document.getElementById('btn-copy').addEventListener('click', (e) => {
-    createRipple(e);
-    copySummary();
-  });
-  document.getElementById('btn-email').addEventListener('click', (e) => {
-    e.preventDefault();
-    createRipple(e);
-    sendEmail();
-  });
-  document.getElementById('btn-change').addEventListener('click', (e) => {
-    createRipple(e);
-    setTimeout(() => {
-      showScreen('screen-destination');
-    }, 200);
-  });
+  // #region agent log
+  if (btnEmail) {
+    btnEmail.addEventListener('click', (e) => {
+      e.preventDefault();
+      createRipple(e);
+      sendEmail();
+    });
+  } else {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:346', message: 'btn-email element not found', data: { error: 'Missing element' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { });
+    // #endregion
+  }
 }
 
 // Funkcje pomocnicze
 function showScreen(screenId) {
+  console.log('🟡 showScreen called with:', screenId);
   const currentScreen = document.querySelector('.screen.active');
   const targetScreen = document.getElementById(screenId);
+
+  if (!targetScreen) {
+    console.error('🔴 Target screen not found:', screenId);
+    return;
+  }
+
+  console.log('✅ Target screen found:', screenId);
 
   if (currentScreen) {
     currentScreen.classList.add('fade-out');
@@ -368,17 +560,21 @@ function showScreen(screenId) {
       targetScreen.classList.add('active');
       // Scroll do góry
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      console.log('✅ Screen switched to:', screenId);
     }, 300);
   } else {
     targetScreen.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    console.log('✅ Screen activated:', screenId);
   }
 }
 
 
 function updateGreeting() {
   const greetingText = document.getElementById('greeting-text');
-  greetingText.textContent = `${appState.name}, mam dla Ciebie…`;
+  if (greetingText) {
+    greetingText.textContent = `${appState.name}, mam dla Ciebie…`;
+  }
 }
 
 function startRevealAnimation() {
@@ -401,8 +597,10 @@ function startRevealAnimation() {
 
 function initDatesScreen() {
   // Reset dat
-  document.getElementById('date-start').value = '';
-  document.getElementById('date-end').value = '';
+  const dateStartInput = document.getElementById('date-start');
+  const dateEndInput = document.getElementById('date-end');
+  if (dateStartInput) dateStartInput.value = '';
+  if (dateEndInput) dateEndInput.value = '';
   appState.dateStart = '';
   appState.dateEnd = '';
 
@@ -424,7 +622,10 @@ function updateDateEnd() {
   end.setDate(end.getDate() + appState.duration);
 
   const endDateString = end.toISOString().split('T')[0];
-  document.getElementById('date-end').value = endDateString;
+  const dateEndInput = document.getElementById('date-end');
+  if (dateEndInput) {
+    dateEndInput.value = endDateString;
+  }
   appState.dateEnd = endDateString;
 }
 
@@ -464,8 +665,21 @@ function getQuickDates(month, duration) {
 }
 
 function updateSummary() {
-  document.getElementById('summary-name').textContent = appState.name;
-  document.getElementById('summary-destination').textContent = appState.destinationName;
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:616', message: 'updateSummary called', data: { name: appState.name, destination: appState.destinationName }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run3', hypothesisId: 'F' }) }).catch(() => { });
+  // #endregion
+
+  const summaryName = document.getElementById('summary-name');
+  const summaryDestination = document.getElementById('summary-destination');
+  const summaryDates = document.getElementById('summary-dates');
+  const summaryDuration = document.getElementById('summary-duration');
+
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:616', message: 'Checking summary elements', data: { nameExists: !!summaryName, destinationExists: !!summaryDestination, datesExists: !!summaryDates, durationExists: !!summaryDuration }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run3', hypothesisId: 'F' }) }).catch(() => { });
+  // #endregion
+
+  if (summaryName) summaryName.textContent = appState.name;
+  if (summaryDestination) summaryDestination.textContent = appState.destinationName;
 
   const startDate = new Date(appState.dateStart);
   const endDate = new Date(appState.dateEnd);
@@ -477,32 +691,15 @@ function updateSummary() {
     });
   };
 
-  document.getElementById('summary-dates').textContent =
-    `${formatDate(startDate)} - ${formatDate(endDate)}`;
-  document.getElementById('summary-duration').textContent = `${appState.duration} dni`;
+  if (summaryDates) {
+    summaryDates.textContent = `${formatDate(startDate)} - ${formatDate(endDate)}`;
+  }
+  if (summaryDuration) {
+    summaryDuration.textContent = `${appState.duration} dni`;
+  }
 }
 
-function copySummary() {
-  const summary = generateSummaryText();
 
-  navigator.clipboard.writeText(summary).then(() => {
-    const btn = document.getElementById('btn-copy');
-    const originalText = btn.textContent;
-    btn.textContent = '✓ Skopiowano!';
-    btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-    btn.style.color = 'white';
-    btn.style.transform = 'scale(1.05)';
-
-    setTimeout(() => {
-      btn.textContent = originalText;
-      btn.style.background = '';
-      btn.style.color = '';
-      btn.style.transform = '';
-    }, 2000);
-  }).catch(() => {
-    alert('Nie udało się skopiować. Spróbuj ponownie.');
-  });
-}
 
 function generateSummaryText() {
   const startDate = new Date(appState.dateStart);
@@ -527,7 +724,10 @@ function sendEmail() {
   const body = encodeURIComponent(generateSummaryText());
   const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
 
-  document.getElementById('btn-email').href = mailtoLink;
+  const btnEmail = document.getElementById('btn-email');
+  if (btnEmail) {
+    btnEmail.href = mailtoLink;
+  }
   // Otwórz w nowym oknie (jeśli to możliwe)
   window.location.href = mailtoLink;
 }
@@ -573,18 +773,31 @@ function initPresentation() {
 function renderSlide(index) {
   const container = document.getElementById('presentation-content');
   const indexDisplay = document.getElementById('presentation-index');
-  const btn = document.getElementById('btn-presentation-next');
+  const btnNext = document.getElementById('btn-presentation-next');
+  const btnPrev = document.getElementById('btn-presentation-prev');
+
+  if (!container || !indexDisplay || !btnNext || !btnPrev) {
+    console.error('Missing presentation elements');
+    return;
+  }
 
   container.innerHTML = `<div class="card-content slide-enter">${slideItems[index]}</div>`;
   indexDisplay.textContent = index + 1;
 
   // Change button text on last slide
   if (index === slideItems.length - 1) {
-    btn.textContent = 'Przejdź do wyboru';
-    btn.classList.add('btn-highlight'); // Optional extra style
+    btnNext.textContent = 'Przejdź do wyboru';
+    btnNext.classList.add('btn-highlight'); // Optional extra style
   } else {
-    btn.textContent = 'Zobacz kolejną';
-    btn.classList.remove('btn-highlight');
+    btnNext.textContent = 'Zobacz kolejną';
+    btnNext.classList.remove('btn-highlight');
+  }
+
+  // Show/hide prev button on first slide
+  if (index === 0) {
+    btnPrev.style.display = 'none';
+  } else {
+    btnPrev.style.display = 'inline-block';
   }
 }
 
@@ -596,5 +809,15 @@ function nextPresentationSlide() {
   } else {
     // End of presentation, go to selection
     showScreen('screen-destination');
+  }
+}
+
+function prevPresentationSlide() {
+  if (currentSlideIndex > 0) {
+    currentSlideIndex--;
+    renderSlide(currentSlideIndex);
+  } else {
+    // Go back to reveal screen
+    showScreen('screen-reveal');
   }
 }
