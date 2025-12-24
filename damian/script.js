@@ -32,8 +32,56 @@ const destinations = {
   }
 };
 
+// Ripple effect dla przycisków
+function createRipple(event) {
+  const button = event.currentTarget;
+  const circle = document.createElement('span');
+  const diameter = Math.max(button.clientWidth, button.clientHeight);
+  const radius = diameter / 2;
+
+  circle.style.width = circle.style.height = `${diameter}px`;
+  circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+  circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+  circle.classList.add('ripple');
+
+  const ripple = button.getElementsByClassName('ripple')[0];
+  if (ripple) {
+    ripple.remove();
+  }
+
+  button.appendChild(circle);
+  
+  setTimeout(() => {
+    circle.remove();
+  }, 600);
+}
+
 // Inicjalizacja
 document.addEventListener('DOMContentLoaded', () => {
+  // Dodaj style dla ripple
+  const style = document.createElement('style');
+  style.textContent = `
+    .btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: ripple 0.6s ease-out;
+      pointer-events: none;
+    }
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  
   initApp();
 });
 
@@ -68,8 +116,12 @@ function initApp() {
   });
 
   // Przycisk wyboru kierunku
-  document.getElementById('btn-choose-destination').addEventListener('click', () => {
-    showScreen('screen-destination');
+  const btnChooseDestination = document.getElementById('btn-choose-destination');
+  btnChooseDestination.addEventListener('click', (e) => {
+    createRipple(e);
+    setTimeout(() => {
+      showScreen('screen-destination');
+    }, 200);
   });
 
   // Formularz destynacji
@@ -94,7 +146,8 @@ function initApp() {
 
   // Przyciski długości pobytu
   document.querySelectorAll('.duration-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      createRipple(e);
       document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       appState.duration = parseInt(btn.dataset.days);
@@ -104,12 +157,19 @@ function initApp() {
 
   // Szybkie terminy
   document.querySelectorAll('.quick-date-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      createRipple(e);
       const month = parseInt(btn.dataset.month);
       const dates = getQuickDates(month, appState.duration);
       document.getElementById('date-start').value = dates.start;
       appState.dateStart = dates.start;
       updateDateEnd();
+      
+      // Animacja potwierdzenia
+      btn.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        btn.style.transform = '';
+      }, 150);
     });
   });
 
@@ -157,27 +217,42 @@ function initApp() {
   });
 
   // Przyciski podsumowania
-  document.getElementById('btn-copy').addEventListener('click', copySummary);
+  document.getElementById('btn-copy').addEventListener('click', (e) => {
+    createRipple(e);
+    copySummary();
+  });
   document.getElementById('btn-email').addEventListener('click', (e) => {
     e.preventDefault();
+    createRipple(e);
     sendEmail();
   });
-  document.getElementById('btn-change').addEventListener('click', () => {
-    showScreen('screen-destination');
+  document.getElementById('btn-change').addEventListener('click', (e) => {
+    createRipple(e);
+    setTimeout(() => {
+      showScreen('screen-destination');
+    }, 200);
   });
 }
 
 // Funkcje pomocnicze
 function showScreen(screenId) {
-  document.querySelectorAll('.screen').forEach(screen => {
-    screen.classList.remove('active');
-  });
+  const currentScreen = document.querySelector('.screen.active');
   const targetScreen = document.getElementById(screenId);
-  targetScreen.classList.add('active');
   
-  // Scroll do góry
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (currentScreen) {
+    currentScreen.classList.add('fade-out');
+    setTimeout(() => {
+      currentScreen.classList.remove('active', 'fade-out');
+      targetScreen.classList.add('active');
+      // Scroll do góry
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 300);
+  } else {
+    targetScreen.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
+
 
 function updateGreeting() {
   const greetingText = document.getElementById('greeting-text');
@@ -185,16 +260,21 @@ function updateGreeting() {
 }
 
 function startRevealAnimation() {
-  // Animacja już jest w CSS, ale możemy dodać dodatkowe efekty
-  setTimeout(() => {
-    document.getElementById('reveal-flight').style.opacity = '1';
-  }, 200);
-  setTimeout(() => {
-    document.getElementById('reveal-spa').style.opacity = '1';
-  }, 400);
-  setTimeout(() => {
-    document.getElementById('reveal-abroad').style.opacity = '1';
-  }, 600);
+  // Dodatkowe efekty interaktywne
+  const items = ['reveal-flight', 'reveal-spa', 'reveal-abroad'];
+  items.forEach((id, index) => {
+    const item = document.getElementById(id);
+    setTimeout(() => {
+      item.style.opacity = '1';
+      // Dodaj efekt hover z animacją
+      item.addEventListener('mouseenter', () => {
+        item.style.transform = 'scale(1.15) rotate(5deg)';
+      });
+      item.addEventListener('mouseleave', () => {
+        item.style.transform = 'scale(1) rotate(0deg)';
+      });
+    }, 200 + (index * 200));
+  });
 }
 
 function initDatesScreen() {
@@ -286,14 +366,16 @@ function copySummary() {
   navigator.clipboard.writeText(summary).then(() => {
     const btn = document.getElementById('btn-copy');
     const originalText = btn.textContent;
-    btn.textContent = 'Skopiowano!';
-    btn.style.background = 'var(--color-success)';
+    btn.textContent = '✓ Skopiowano!';
+    btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
     btn.style.color = 'white';
+    btn.style.transform = 'scale(1.05)';
     
     setTimeout(() => {
       btn.textContent = originalText;
       btn.style.background = '';
       btn.style.color = '';
+      btn.style.transform = '';
     }, 2000);
   }).catch(() => {
     alert('Nie udało się skopiować. Spróbuj ponownie.');
