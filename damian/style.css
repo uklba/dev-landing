@@ -6,17 +6,17 @@
 }
 
 :root {
-  /* Christmas Palette */
-  --color-primary: #D42426;
-  /* Christmas Red */
-  --color-primary-light: #E63E40;
-  --color-primary-dark: #A81012;
-  --color-secondary: #165B33;
-  /* Forest Green */
-  --color-secondary-light: #2A7B4B;
-  --color-accent: #F8B229;
-  /* Gold */
-  --color-accent-light: #FFD269;
+  /* Winter Blue Palette */
+  --color-primary: #0EA5E9;
+  /* Sky Blue */
+  --color-primary-light: #38BDF8;
+  --color-primary-dark: #0284C7;
+  --color-secondary: #1E293B;
+  /* Slate Blue */
+  --color-secondary-light: #334155;
+  --color-accent: #E2E8F0;
+  /* Ice Silver */
+  --color-accent-light: #F1F5F9;
   --color-snow: #F8FAFC;
 
   --color-bg-dark: #0F172A;
@@ -32,7 +32,7 @@
   --radius-sm: 12px;
   --transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  --font-display: 'Mountains of Christmas', cursive;
+  --font-display: 'Outfit', sans-serif;
   --font-body: 'Outfit', sans-serif;
 }
 
