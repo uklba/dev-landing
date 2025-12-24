@@ -206,12 +206,27 @@ function initApp() {
       return;
     }
 
+
     hideError(nameError);
     appState.name = name;
-    showScreen('screen-reveal');
-    updateGreeting();
-    startRevealAnimation();
+    
+    // Start Sequence
+    // 1. Christmas Wishes
+    showScreen('screen-wishes');
     triggerConfetti();
+
+    // 2. Birthday Tease (after 3s)
+    setTimeout(() => {
+      showScreen('screen-birthday');
+    }, 3500);
+
+    // 3. Main Reveal (after another 3.5s)
+    setTimeout(() => {
+      showScreen('screen-reveal');
+      updateGreeting();
+      startRevealAnimation();
+      triggerConfetti();
+    }, 7000);
   });
 
   // Przycisk wyboru kierunku
