@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prezent dla Damiana</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ekran startowy -->
+  <div id="screen-start" class="screen active">
+    <div class="container">
+      <div class="card">
+        <h1 class="title">Prezent dla Damiana</h1>
+        <form id="name-form" class="name-form">
+          <label for="name-input" class="sr-only">Wpisz imię</label>
+          <input 
+            type="text" 
+            id="name-input" 
+            class="name-input" 
+            placeholder="Wpisz imię"
+            autocomplete="off"
+            required
+            aria-required="true"
+          >
+          <p id="name-error" class="error-message" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary">Otwórz prezent</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ekran odsłonięcia -->
+  <div id="screen-reveal" class="screen">
+    <div class="container">
+      <div class="card">
+        <h2 class="greeting" id="greeting-text">Damian, mam dla Ciebie…</h2>
+        <div class="reveal-content">
+          <div class="reveal-item" id="reveal-flight">
+            <span class="reveal-icon">✈️</span>
+            <span class="reveal-text">Lot</span>
+          </div>
+          <div class="reveal-item" id="reveal-spa">
+            <span class="reveal-icon">🧘</span>
+            <span class="reveal-text">SPA</span>
+          </div>
+          <div class="reveal-item" id="reveal-abroad">
+            <span class="reveal-icon">🌍</span>
+            <span class="reveal-text">Za granicą</span>
+          </div>
+        </div>
+        <p class="description">
+          Nie voucher, który zapomnisz po 2 dniach. Jedziemy na 3–4 dni do SPA za granicą.
+        </p>
+        <button id="btn-choose-destination" class="btn btn-primary">Wybierz kierunek</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ekran destynacji -->
+  <div id="screen-destination" class="screen">
+    <div class="container">
+      <div class="card">
+        <h2 class="section-title">Wybierz destynację</h2>
+        <form id="destination-form" class="destination-form">
+          <div class="destination-grid">
+            <label class="destination-card">
+              <input type="radio" name="destination" value="budapest" required>
+              <div class="card-content">
+                <h3 class="destination-title">Budapeszt</h3>
+                <p class="destination-desc">Termalne łaźnie w sercu Węgier. Relaks w historycznych basenach termalnych.</p>
+                <div class="destination-meta">
+                  <span class="meta-item">⏱️ Czas dojazdu: ~2h</span>
+                  <span class="meta-item">🏷️ termy, city + spa</span>
+                </div>
+                <div class="destination-why">
+                  <strong>Dlaczego warto:</strong> Najsłynniejsze łaźnie termalne w Europie, połączenie relaksu z zwiedzaniem miasta.
+                </div>
+              </div>
+            </label>
+
+            <label class="destination-card">
+              <input type="radio" name="destination" value="milan" required>
+              <div class="card-content">
+                <h3 class="destination-title">Mediolan + QC Terme Pré-Saint-Didier</h3>
+                <p class="destination-desc">Alpy, widok na Mont Blanc. Luksusowe SPA w górach z panoramą na najwyższy szczyt Europy.</p>
+                <div class="destination-meta">
+                  <span class="meta-item">⏱️ Czas dojazdu: ~2h</span>
+                  <span class="meta-item">🏷️ alpy, widok, premium</span>
+                </div>
+                <div class="destination-why">
+                  <strong>Dlaczego warto:</strong> Niezapomniane widoki, luksusowe spa w górskim klimacie, możliwość zwiedzenia Mediolanu.
+                </div>
+              </div>
+            </label>
+
+            <label class="destination-card">
+              <input type="radio" name="destination" value="munich" required>
+              <div class="card-content">
+                <h3 class="destination-title">Monachium + Therme Erding</h3>
+                <p class="destination-desc">Największy kompleks termalny w Europie. 27 basenów, sauny, strefy relaksu.</p>
+                <div class="destination-meta">
+                  <span class="meta-item">⏱️ Czas dojazdu: ~1.5h</span>
+                  <span class="meta-item">🏷️ termy, największy kompleks</span>
+                </div>
+                <div class="destination-why">
+                  <strong>Dlaczego warto:</strong> Największy wybór atrakcji termalnych, idealne połączenie z wizytą w Monachium.
+                </div>
+              </div>
+            </label>
+
+            <label class="destination-card">
+              <input type="radio" name="destination" value="seville" required>
+              <div class="card-content">
+                <h3 class="destination-title">Sewilla + Aire Ancient Baths</h3>
+                <p class="destination-desc">Klimatyczne łaźnie w andaluzyjskim stylu. Relaks w historycznej atmosferze.</p>
+                <div class="destination-meta">
+                  <span class="meta-item">⏱️ Czas dojazdu: ~3h</span>
+                  <span class="meta-item">🏷️ klimatyczne, city + spa</span>
+                </div>
+                <div class="destination-why">
+                  <strong>Dlaczego warto:</strong> Unikalna atmosfera, połączenie relaksu z odkrywaniem pięknej Sewilli.
+                </div>
+              </div>
+            </label>
+
+            <label class="destination-card">
+              <input type="radio" name="destination" value="slovenia" required>
+              <div class="card-content">
+                <h3 class="destination-title">Słowenia (Terme Olimia)</h3>
+                <p class="destination-desc">Spokojnie i jakościowo. Nowoczesne spa w malowniczej okolicy.</p>
+                <div class="destination-meta">
+                  <span class="meta-item">⏱️ Czas dojazdu: ~1.5h</span>
+                  <span class="meta-item">🏷️ spokojnie, jakościowo</span>
+                </div>
+                <div class="destination-why">
+                  <strong>Dlaczego warto:</strong> Spokojna atmosfera, wysokiej jakości usługi, bliskość natury.
+                </div>
+              </div>
+            </label>
+          </div>
+          <p id="destination-error" class="error-message" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary">Wybierz termin</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ekran terminu -->
+  <div id="screen-dates" class="screen">
+    <div class="container">
+      <div class="card">
+        <h2 class="section-title">Wybierz termin</h2>
+        <form id="dates-form" class="dates-form">
+          <div class="duration-selector">
+            <label class="duration-label">Długość pobytu:</label>
+            <div class="duration-toggle">
+              <button type="button" class="duration-btn active" data-days="3">3 dni</button>
+              <button type="button" class="duration-btn" data-days="4">4 dni</button>
+              <button type="button" class="duration-btn" data-days="5">5 dni</button>
+            </div>
+          </div>
+
+          <div class="quick-dates">
+            <p class="quick-dates-label">Szybki wybór:</p>
+            <div class="quick-dates-buttons">
+              <button type="button" class="quick-date-btn" data-month="0">Styczeń</button>
+              <button type="button" class="quick-date-btn" data-month="1">Luty</button>
+              <button type="button" class="quick-date-btn" data-month="2">Marzec</button>
+            </div>
+          </div>
+
+          <div class="date-range">
+            <div class="date-input-group">
+              <label for="date-start">Data rozpoczęcia:</label>
+              <input type="date" id="date-start" class="date-input" required>
+            </div>
+            <div class="date-input-group">
+              <label for="date-end">Data zakończenia:</label>
+              <input type="date" id="date-end" class="date-input" required readonly>
+            </div>
+          </div>
+          <p id="dates-error" class="error-message" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary">Potwierdź wybór</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ekran finałowy -->
+  <div id="screen-summary" class="screen">
+    <div class="container">
+      <div class="card">
+        <h2 class="section-title">Podsumowanie</h2>
+        <div class="summary-content">
+          <div class="summary-item">
+            <span class="summary-label">Imię:</span>
+            <span class="summary-value" id="summary-name">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Destynacja:</span>
+            <span class="summary-value" id="summary-destination">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Termin:</span>
+            <span class="summary-value" id="summary-dates">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Długość:</span>
+            <span class="summary-value" id="summary-duration">-</span>
+          </div>
+        </div>
+        <div class="summary-actions">
+          <button id="btn-copy" class="btn btn-secondary">Kopiuj podsumowanie</button>
+          <a id="btn-email" href="#" class="btn btn-secondary">Wyślij wybór mailem</a>
+          <button id="btn-change" class="btn btn-secondary">Zmień wybór</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
