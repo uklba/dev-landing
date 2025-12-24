@@ -209,7 +209,7 @@ function initApp() {
 
     hideError(nameError);
     appState.name = name;
-    
+
     // Start Sequence
     // 1. Christmas Wishes
     showScreen('screen-wishes');
@@ -229,13 +229,21 @@ function initApp() {
     }, 7000);
   });
 
-  // Przycisk wyboru kierunku
+  // Przycisk wyboru kierunku -> Start Presentation Mode
   const btnChooseDestination = document.getElementById('btn-choose-destination');
   btnChooseDestination.addEventListener('click', (e) => {
     createRipple(e);
+    initPresentation();
     setTimeout(() => {
-      showScreen('screen-destination');
+      showScreen('screen-presentation');
     }, 200);
+  });
+
+  // Presentation Logic
+  const btnPresentationNext = document.getElementById('btn-presentation-next');
+  btnPresentationNext.addEventListener('click', (e) => {
+    createRipple(e);
+    nextPresentationSlide();
   });
 
   // Formularz destynacji
@@ -548,3 +556,45 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+
+// Presentation State
+let currentSlideIndex = 0;
+let slideItems = [];
+
+function initPresentation() {
+  currentSlideIndex = 0;
+  // Collect data directly from DOM elements in the hidden list
+  const cards = document.querySelectorAll('.destination-grid .destination-card .card-content');
+  slideItems = Array.from(cards).map(card => card.innerHTML);
+
+  renderSlide(currentSlideIndex);
+}
+
+function renderSlide(index) {
+  const container = document.getElementById('presentation-content');
+  const indexDisplay = document.getElementById('presentation-index');
+  const btn = document.getElementById('btn-presentation-next');
+
+  container.innerHTML = `<div class="card-content slide-enter">${slideItems[index]}</div>`;
+  indexDisplay.textContent = index + 1;
+
+  // Change button text on last slide
+  if (index === slideItems.length - 1) {
+    btn.textContent = 'Przejdź do wyboru';
+    btn.classList.add('btn-highlight'); // Optional extra style
+  } else {
+    btn.textContent = 'Zobacz kolejną';
+    btn.classList.remove('btn-highlight');
+  }
+}
+
+function nextPresentationSlide() {
+  if (currentSlideIndex < slideItems.length - 1) {
+    currentSlideIndex++;
+    // Animate out? Simple replacement for now, CSS handles entry animation
+    renderSlide(currentSlideIndex);
+  } else {
+    // End of presentation, go to selection
+    showScreen('screen-destination');
+  }
+}
