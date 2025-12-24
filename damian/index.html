@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prezent dla Damiana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Outfit:wght@300;400;600;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <canvas id="snow-canvas"></canvas>
   <!-- Ekran startowy -->
   <div id="screen-start" class="screen active">
     <div class="container">
@@ -14,15 +22,8 @@
         <h1 class="title">Prezent dla Damiana</h1>
         <form id="name-form" class="name-form">
           <label for="name-input" class="sr-only">Wpisz imię</label>
-          <input 
-            type="text" 
-            id="name-input" 
-            class="name-input" 
-            placeholder="Wpisz imię"
-            autocomplete="off"
-            required
-            aria-required="true"
-          >
+          <input type="text" id="name-input" class="name-input" placeholder="Wpisz imię" autocomplete="off" required
+            aria-required="true">
           <p id="name-error" class="error-message" aria-live="polite"></p>
           <button type="submit" class="btn btn-primary">Otwórz prezent</button>
         </form>
@@ -68,13 +69,15 @@
               <input type="radio" name="destination" value="budapest" required>
               <div class="card-content">
                 <h3 class="destination-title">Budapeszt</h3>
-                <p class="destination-desc">Termalne łaźnie w sercu Węgier. Relaks w historycznych basenach termalnych.</p>
+                <p class="destination-desc">Termalne łaźnie w sercu Węgier. Relaks w historycznych basenach termalnych.
+                </p>
                 <div class="destination-meta">
                   <span class="meta-item">⏱️ Czas dojazdu: ~2h</span>
                   <span class="meta-item">🏷️ termy, city + spa</span>
                 </div>
                 <div class="destination-why">
-                  <strong>Dlaczego warto:</strong> Najsłynniejsze łaźnie termalne w Europie, połączenie relaksu z zwiedzaniem miasta.
+                  <strong>Dlaczego warto:</strong> Najsłynniejsze łaźnie termalne w Europie, połączenie relaksu z
+                  zwiedzaniem miasta.
                 </div>
               </div>
             </label>
@@ -83,13 +86,15 @@
               <input type="radio" name="destination" value="milan" required>
               <div class="card-content">
                 <h3 class="destination-title">Mediolan + QC Terme Pré-Saint-Didier</h3>
-                <p class="destination-desc">Alpy, widok na Mont Blanc. Luksusowe SPA w górach z panoramą na najwyższy szczyt Europy.</p>
+                <p class="destination-desc">Alpy, widok na Mont Blanc. Luksusowe SPA w górach z panoramą na najwyższy
+                  szczyt Europy.</p>
                 <div class="destination-meta">
                   <span class="meta-item">⏱️ Czas dojazdu: ~2h</span>
                   <span class="meta-item">🏷️ alpy, widok, premium</span>
                 </div>
                 <div class="destination-why">
-                  <strong>Dlaczego warto:</strong> Niezapomniane widoki, luksusowe spa w górskim klimacie, możliwość zwiedzenia Mediolanu.
+                  <strong>Dlaczego warto:</strong> Niezapomniane widoki, luksusowe spa w górskim klimacie, możliwość
+                  zwiedzenia Mediolanu.
                 </div>
               </div>
             </label>
@@ -98,13 +103,15 @@
               <input type="radio" name="destination" value="munich" required>
               <div class="card-content">
                 <h3 class="destination-title">Monachium + Therme Erding</h3>
-                <p class="destination-desc">Największy kompleks termalny w Europie. 27 basenów, sauny, strefy relaksu.</p>
+                <p class="destination-desc">Największy kompleks termalny w Europie. 27 basenów, sauny, strefy relaksu.
+                </p>
                 <div class="destination-meta">
                   <span class="meta-item">⏱️ Czas dojazdu: ~1.5h</span>
                   <span class="meta-item">🏷️ termy, największy kompleks</span>
                 </div>
                 <div class="destination-why">
-                  <strong>Dlaczego warto:</strong> Największy wybór atrakcji termalnych, idealne połączenie z wizytą w Monachium.
+                  <strong>Dlaczego warto:</strong> Największy wybór atrakcji termalnych, idealne połączenie z wizytą w
+                  Monachium.
                 </div>
               </div>
             </label>
@@ -113,7 +120,8 @@
               <input type="radio" name="destination" value="seville" required>
               <div class="card-content">
                 <h3 class="destination-title">Sewilla + Aire Ancient Baths</h3>
-                <p class="destination-desc">Klimatyczne łaźnie w andaluzyjskim stylu. Relaks w historycznej atmosferze.</p>
+                <p class="destination-desc">Klimatyczne łaźnie w andaluzyjskim stylu. Relaks w historycznej atmosferze.
+                </p>
                 <div class="destination-meta">
                   <span class="meta-item">⏱️ Czas dojazdu: ~3h</span>
                   <span class="meta-item">🏷️ klimatyczne, city + spa</span>
@@ -221,5 +229,5 @@
 
   <script src="script.js"></script>
 </body>
-</html>
 
+</html>
