@@ -35,25 +35,29 @@ console.log('✅ appState initialized');
 
 // Mapowanie destynacji
 const destinations = {
+  ischia: {
+    name: 'Giardini Poseidon Terme (Ischia)',
+    description: 'Największy park termalny na wyspie Ischia'
+  },
   budapest: {
-    name: 'Budapeszt',
-    description: 'Termalne łaźnie w sercu Węgier'
+    name: 'Budapeszt (Łaźnie Széchenyi)',
+    description: 'Historyczne termy w sercu stolicy Węgier'
+  },
+  iceland: {
+    name: 'Islandia',
+    description: 'Loty + zwiedzanie wyspy'
   },
   milan: {
     name: 'Mediolan + QC Terme Pré-Saint-Didier',
-    description: 'Alpy, widok na Mont Blanc'
+    description: 'Luksusowe spa u stóp Mont Blanc'
   },
   munich: {
     name: 'Monachium + Therme Erding',
     description: 'Największy kompleks termalny w Europie'
   },
-  seville: {
-    name: 'Sewilla + Aire Ancient Baths',
-    description: 'Klimatyczne łaźnie w andaluzyjskim stylu'
-  },
-  slovenia: {
-    name: 'Słowenia (Terme Olimia)',
-    description: 'Spokojnie i jakościowo'
+  saturnia: {
+    name: 'Terme di Saturnia (Toskania)',
+    description: 'Naturalne źródła siarkowe w Toskanii'
   }
 };
 console.log('✅ destinations initialized');
