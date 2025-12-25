@@ -524,6 +524,7 @@ function initApp() {
       updateSummary();
     });
   } else {
+    console.error('Missing dates form or error element');
     // #region agent log
     fetch('http://127.0.0.1:7242/ingest/323f44ed-d8f7-4c8d-8940-3ac1270b9c8d', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:332', message: 'dates form elements not found', data: { error: 'Missing elements' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run2', hypothesisId: 'C' }) }).catch(() => { });
     // #endregion
@@ -725,7 +726,7 @@ Długość: ${appState.duration} dni`;
 function sendEmail() {
   const subject = encodeURIComponent(`Prezent świąteczny - wybór Damiana`);
   const body = encodeURIComponent(generateSummaryText());
-  const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+  const mailtoLink = `mailto:kontakt@lukaszdev.pl?subject=${subject}&body=${body}`;
 
   const btnEmail = document.getElementById('btn-email');
   if (btnEmail) {
