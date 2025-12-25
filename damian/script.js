@@ -634,8 +634,7 @@ function updateDateEnd() {
 }
 
 function getQuickDates(month, duration) {
-  const now = new Date();
-  const currentYear = now.getFullYear();
+  const currentYear = 2026;
 
   // Znajdź najbliższy piątek w danym miesiącu
   const targetMonth = new Date(currentYear, month, 1);
