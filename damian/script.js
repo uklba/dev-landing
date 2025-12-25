@@ -40,20 +40,20 @@ const destinations = {
     description: 'Największy park termalny na wyspie Ischia'
   },
   budapest: {
-    name: 'Budapeszt (Łaźnie Széchenyi)',
-    description: 'Historyczne termy w sercu stolicy Węgier'
+    name: 'Budapeszt (Łaźnie Széchenyi + Zwiedzanie)',
+    description: 'Historyczne termy i spacer po stolicy Węgier'
   },
   iceland: {
     name: 'Islandia',
     description: 'Loty + zwiedzanie wyspy'
   },
   milan: {
-    name: 'Mediolan + QC Terme Pré-Saint-Didier',
-    description: 'Luksusowe spa u stóp Mont Blanc'
+    name: 'Mediolan (Zwiedzanie) + QC Terme (Alpy)',
+    description: 'Luksusowe spa w górach i zwiedzanie Mediolanu'
   },
   munich: {
-    name: 'Monachium + Therme Erding',
-    description: 'Największy kompleks termalny w Europie'
+    name: 'Monachium + Therme Erding + BMW Welt',
+    description: 'Termy, zwiedzanie miasta i BMW Welt'
   },
   saturnia: {
     name: 'Terme di Saturnia (Toskania)',
