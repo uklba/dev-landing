@@ -342,18 +342,23 @@ function initApp() {
     showScreen('screen-wishes');
     triggerConfetti();
 
-    // 2. Birthday Tease (after 3s)
+    // 2. Birthday Tease (after 3.5s)
     setTimeout(() => {
       showScreen('screen-birthday');
     }, 3500);
 
-    // 3. Main Reveal (after another 3.5s)
+    // 3. Massage Tease (after 7s)
+    setTimeout(() => {
+      showScreen('screen-massage');
+    }, 7000);
+
+    // 4. Main Reveal (after 12s)
     setTimeout(() => {
       showScreen('screen-reveal');
       updateGreeting();
       startRevealAnimation();
       triggerConfetti();
-    }, 7000);
+    }, 12000);
   });
 
   // Przycisk wyboru kierunku -> Start Presentation Mode
